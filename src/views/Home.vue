@@ -1,25 +1,15 @@
 <template>
-  <div id="home">
-    <div id="body"></div>
-    <Footer />
-  </div>
+  <div id="home"><h1 class="text-center">Home Page</h1></div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Footer from "@/components/global/Footer.vue";
 
 export default {
   name: "Home",
 
-  components: {
-    Footer,
-  },
+  components: {},
 };
 </script>
 
-<style lang="scss" scoped>
-#body {
-  height: 1000px;
-}
-</style>
+<style lang="scss" scoped></style>
