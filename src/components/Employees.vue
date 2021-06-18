@@ -244,6 +244,15 @@ export default {
       role: "",
     },
 
+    customerEdit: {
+      fullName: "",
+      gender: "",
+      username: "",
+      password: "",
+      phone: "",
+      role: "",
+    },
+
     editedItem: {
       fullName: "",
       gender: "",
@@ -303,14 +312,32 @@ export default {
 
     // add new record into database;
     newRecord(item) {
+      console.log("NEW EMPLOYEE REQUEST: ");
+
       console.log(item);
 
+      EmployeeDataService.createNewEmployee(item)
+        .then((response) => {
+          this.loadRecords();
+
+          console.log("NEW EMPLOYEE RESPONSE: ");
+
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
       this.newItem = Object.assign({}, this.defaultItem);
+
+      this.close();
     },
 
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
+
       this.editedItem = Object.assign({}, item);
+
       this.dialog = true;
     },
 
@@ -327,6 +354,8 @@ export default {
 
       EmployeeDataService.deleteEmployee(deletedItem.id)
         .then((response) => {
+          this.loadRecords();
+
           console.log(response.data);
         })
         .catch((e) => {
@@ -341,9 +370,8 @@ export default {
           "]."
       );
 
-      this.desserts.splice(this.editedIndex, 1);
-
-      this.loadRecords();
+      // done: replace it with real fetch record from database;
+      // this.desserts.splice(this.editedIndex, 1);
 
       this.closeDelete();
     },
@@ -369,6 +397,30 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         let updatedItem = this.desserts[this.editedIndex];
+
+        // customer data modeling;
+        this.customerEdit.fullName = this.editedItem.fullName;
+        this.customerEdit.gender = this.editedItem.gender;
+        this.customerEdit.username = this.editedItem.username;
+        this.customerEdit.password = this.editedItem.password;
+        this.customerEdit.phone = this.editedItem.phone;
+        this.customerEdit.role = this.editedItem.role;
+
+        console.log("UPDATED EMPLOYEE REQUEST: ");
+
+        console.log(this.customerEdit);
+
+        EmployeeDataService.updateEmployee(updatedItem.id, this.customerEdit)
+          .then((response) => {
+            this.loadRecords();
+
+            console.log("UPDATED EMPLOYEE RESPONSE: ");
+
+            console.log(response.data);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
 
         Object.assign(this.desserts[this.editedIndex], this.editedItem);
 
