@@ -58,7 +58,7 @@ export default {
       {
         text: "Employees",
         icon: "mdi-account",
-        link: "/Employees",
+        link: "/employees",
       },
     ],
   }),
