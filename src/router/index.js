@@ -7,6 +7,7 @@ import Manager from "../views/Manager";
 
 // components importing:-
 import Employees from "../components/Employees";
+import Doctors from "../components/Doctors";
 
 Vue.use(VueRouter);
 
@@ -25,6 +26,11 @@ const routes = [
         path: "/manager/employees",
         name: "Employees",
         component: Employees,
+      },
+      {
+        path: "/manager/doctors",
+        name: "Doctors",
+        component: Doctors,
       },
     ],
   },

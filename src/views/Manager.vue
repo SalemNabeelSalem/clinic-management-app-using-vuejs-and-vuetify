@@ -63,6 +63,11 @@ export default {
         icon: "mdi-account",
         link: "/manager/employees",
       },
+      {
+        text: "Doctors",
+        icon: "mdi-doctor",
+        link: "/manager/doctors",
+      },
     ],
   }),
 };

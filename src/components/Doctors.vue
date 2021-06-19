@@ -1,8 +1,8 @@
 <template>
-  <div id="employees">
+  <div id="doctor">
     <hr />
 
-    <h1 class="text-center">Employees Page</h1>
+    <h1 class="text-center">Doctors Page</h1>
 
     <v-data-table
       :headers="headers"
@@ -21,11 +21,11 @@
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                New Employee
+                New Doctor
               </v-btn>
             </template>
 
-            <v-card v-if="formTitle === 'New Employee'">
+            <v-card v-if="formTitle === 'New Doctor'">
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
@@ -57,9 +57,9 @@
 
                     <v-col cols="12" sm="6" md="4">
                       <v-select
-                        :items="userRules"
-                        label="Rule"
-                        v-model="newItem.role"
+                        :items="doctorTypes"
+                        label="Type"
+                        v-model="newItem.type"
                       ></v-select>
                     </v-col>
 
@@ -93,7 +93,7 @@
               </v-card-actions>
             </v-card>
 
-            <v-card v-if="formTitle === 'Edit Employee'">
+            <v-card v-if="formTitle === 'Edit Doctor'">
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
@@ -125,9 +125,9 @@
 
                     <v-col cols="12" sm="6" md="4">
                       <v-select
-                        :items="userRules"
+                        :items="doctorTypes"
                         label="Rule"
-                        v-model="editedItem.role"
+                        v-model="editedItem.type"
                       ></v-select>
                     </v-col>
 
@@ -163,7 +163,7 @@
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h6">
-                Are you sure want to delete employee no:
+                Are you sure want to delete doctor no:
                 <span class="red--text"> {{ editedItem.id }}</span> ?
               </v-card-title>
 
@@ -199,7 +199,7 @@
           icon="mdi-cloud-alert"
           class="mt-4"
         >
-          There Are No Employees.
+          There Are No Doctors.
         </v-alert>
       </template>
     </v-data-table>
@@ -207,10 +207,10 @@
 </template>
 
 <script>
-import EmployeeDataService from "@/lib/EmployeeDataService.js";
+import DoctorDataService from "@/lib/DoctorDataService.js";
 
 export default {
-  name: "Employees",
+  name: "Doctors",
 
   components: {},
 
@@ -221,7 +221,7 @@ export default {
 
     // data-table headers;
     headers: [
-      { text: "Employee.No", value: "id" },
+      { text: "Doctor.No", value: "id" },
       {
         text: "Full-Name",
         align: "start",
@@ -230,7 +230,7 @@ export default {
       },
       { text: "Gender", value: "gender", sortable: false },
       { text: "Phone-Number", value: "phone", sortable: false },
-      { text: "User-Rule", value: "role", sortable: false },
+      { text: "Type", value: "type", sortable: false },
       { text: "Created Time", value: "createdAt" },
       { text: "Last Update Time", value: "updatedAt" },
       { text: "Actions", value: "actions", sortable: false },
@@ -238,7 +238,7 @@ export default {
 
     genders: ["MALE", "FEMALE"],
 
-    userRules: ["RECEPTIONIST"],
+    doctorTypes: ["GENERAL"],
 
     desserts: [],
 
@@ -247,43 +247,43 @@ export default {
     newItem: {
       fullName: "",
       gender: "",
+      phone: "",
+      type: "",
       userName: "",
       password: "",
-      phone: "",
-      role: "",
     },
 
     customerEdit: {
       fullName: "",
       gender: "",
+      phone: "",
+      type: "",
       userName: "",
       password: "",
-      phone: "",
-      role: "",
     },
 
     editedItem: {
       fullName: "",
       gender: "",
+      phone: "",
+      type: "",
       userName: "",
       password: "",
-      phone: "",
-      role: "",
     },
 
     defaultItem: {
       fullName: "",
       gender: "",
+      phone: "",
+      type: "",
       userName: "",
       password: "",
-      phone: "",
-      role: "",
     },
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Employee" : "Edit Employee";
+      return this.editedIndex === -1 ? "New Doctor" : "Edit Doctor";
     },
   },
 
@@ -308,7 +308,7 @@ export default {
   methods: {
     // load records from database;
     loadRecords() {
-      EmployeeDataService.findAllEmployees()
+      DoctorDataService.findAllDoctors()
         .then((response) => {
           this.desserts = response.data;
 
@@ -321,15 +321,15 @@ export default {
 
     // add new record into database;
     newRecord(item) {
-      console.log("NEW EMPLOYEE REQUEST: ");
+      console.log("NEW DOCTOR REQUEST: ");
 
       console.log(item);
 
-      EmployeeDataService.createNewEmployee(item)
+      DoctorDataService.createNewDoctor(item)
         .then((response) => {
           this.loadRecords();
 
-          console.log("NEW EMPLOYEE RESPONSE: ");
+          console.log("NEW DOCTOR RESPONSE: ");
 
           console.log(response.data);
         })
@@ -361,7 +361,7 @@ export default {
     deleteItemConfirm() {
       let deletedItem = this.desserts[this.editedIndex];
 
-      EmployeeDataService.deleteEmployee(deletedItem.id)
+      DoctorDataService.deleteDoctor(deletedItem.id)
         .then((response) => {
           this.loadRecords();
 
@@ -372,7 +372,7 @@ export default {
         });
 
       console.log(
-        "DELETE EMPLOYEE NO: [" +
+        "DELETE DOCTOR NO: [" +
           deletedItem.id +
           "] WITH FULL-NAME: [" +
           deletedItem.fullName +
@@ -410,20 +410,20 @@ export default {
         // customer data modeling;
         this.customerEdit.fullName = this.editedItem.fullName;
         this.customerEdit.gender = this.editedItem.gender;
+        this.customerEdit.phone = this.editedItem.phone;
+        this.customerEdit.type = this.editedItem.type;
         this.customerEdit.userName = this.editedItem.userName;
         this.customerEdit.password = this.editedItem.password;
-        this.customerEdit.phone = this.editedItem.phone;
-        this.customerEdit.role = this.editedItem.role;
 
-        console.log("UPDATED EMPLOYEE REQUEST: ");
+        console.log("UPDATED DOCTOR REQUEST: ");
 
         console.log(this.customerEdit);
 
-        EmployeeDataService.updateEmployee(updatedItem.id, this.customerEdit)
+        DoctorDataService.updateDoctor(updatedItem.id, this.customerEdit)
           .then((response) => {
             this.loadRecords();
 
-            console.log("UPDATED EMPLOYEE RESPONSE: ");
+            console.log("UPDATED DOCTOR RESPONSE: ");
 
             console.log(response.data);
           })
@@ -434,7 +434,7 @@ export default {
         Object.assign(this.desserts[this.editedIndex], this.editedItem);
 
         console.log(
-          "EDITED EMPLOYEE NO: [" +
+          "EDITED DOCTOR NO: [" +
             updatedItem.id +
             "] WITH FULL-NAME: [" +
             updatedItem.fullName +
@@ -443,7 +443,7 @@ export default {
       } else {
         this.desserts.push(this.editedItem);
 
-        console.log("THE NEW EMPLOYEE DATA: " + this.newItem);
+        console.log("THE NEW DOCTOR DATA: " + this.newItem);
       }
       this.close();
     },
