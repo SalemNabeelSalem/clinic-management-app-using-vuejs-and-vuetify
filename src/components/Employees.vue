@@ -41,10 +41,11 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="newItem.gender"
+                      <v-select
+                        :items="genders"
                         label="Gender"
-                      ></v-text-field>
+                        v-model="newItem.gender"
+                      ></v-select>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
@@ -55,10 +56,11 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field
+                      <v-select
+                        :items="userRules"
+                        label="Rule"
                         v-model="newItem.role"
-                        label="User-Rule"
-                      ></v-text-field>
+                      ></v-select>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
@@ -107,10 +109,11 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.gender"
+                      <v-select
+                        :items="genders"
                         label="Gender"
-                      ></v-text-field>
+                        v-model="editedItem.gender"
+                      ></v-select>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
@@ -121,10 +124,11 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field
+                      <v-select
+                        :items="userRules"
+                        label="Rule"
                         v-model="editedItem.role"
-                        label="User-Rule"
-                      ></v-text-field>
+                      ></v-select>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
@@ -158,8 +162,9 @@
 
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
-              <v-card-title class="text-h5">
-                Are you sure you want to delete this item?
+              <v-card-title class="text-h6">
+                Are you sure want to delete employee no:
+                <span class="red--text"> {{ editedItem.id }}</span> ?
               </v-card-title>
 
               <v-card-actions>
@@ -230,6 +235,10 @@ export default {
       { text: "Last Update Time", value: "updatedAt" },
       { text: "Actions", value: "actions", sortable: false },
     ],
+
+    genders: ["MALE", "FEMALE"],
+
+    userRules: ["RECEPTIONIST"],
 
     desserts: [],
 
