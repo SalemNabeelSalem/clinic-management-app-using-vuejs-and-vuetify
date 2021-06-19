@@ -2,8 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 // views importing:-
-/* import Home from "../views/Home.vue"; */
-import Home from "../views/Home";
+import Home from "../views/Home"; // or Home.vue
+import Manager from "../views/Manager";
 
 // components importing:-
 import Employees from "../components/Employees";
@@ -17,9 +17,16 @@ const routes = [
     component: Home,
   },
   {
-    path: "/employees",
-    name: "Employees",
-    component: Employees,
+    path: "/manager",
+    name: "Manager",
+    component: Manager,
+    children: [
+      {
+        path: "/manager/employees",
+        name: "Employees",
+        component: Employees,
+      },
+    ],
   },
   {
     path: "/about",

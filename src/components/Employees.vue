@@ -2,7 +2,7 @@
   <div id="employees">
     <hr />
 
-    <h1 class="text-center">Employees Pages</h1>
+    <h1 class="text-center">Employees Page</h1>
 
     <v-data-table
       :headers="headers"
@@ -419,6 +419,7 @@ export default {
 
         console.log(this.customerEdit);
 
+        // todo: fix, username not updated;
         EmployeeDataService.updateEmployee(updatedItem.id, this.customerEdit)
           .then((response) => {
             this.loadRecords();
