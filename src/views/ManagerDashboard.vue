@@ -1,5 +1,5 @@
 <template>
-  <div id="manager">
+  <div id="manager-dashboard">
     <v-app id="inspire">
       <v-navigation-drawer v-model="drawer" app>
         <v-list shaped>
@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: "manager",
+  name: "manager-dashboard",
 
   components: {},
 

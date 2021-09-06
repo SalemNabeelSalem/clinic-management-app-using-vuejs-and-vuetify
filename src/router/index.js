@@ -3,11 +3,12 @@ import VueRouter from "vue-router";
 
 // views importing:-
 import Home from "../views/Home"; // or Home.vue
-import Manager from "../views/Manager";
+import ManagerDashboard from "../views/ManagerDashboard";
 
 // components importing:-
 import Receptionists from "../components/Receptionists";
 import Doctors from "../components/Doctors";
+import Login from "../components/Login";
 
 Vue.use(VueRouter);
 
@@ -18,12 +19,17 @@ const routes = [
     component: Home,
   },
   {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
     path: "/manager",
     name: "Manager",
-    component: Manager,
+    component: ManagerDashboard,
     children: [
       {
-        path: "/manager/Receptionists",
+        path: "/manager/receptionists",
         name: "Receptionists",
         component: Receptionists,
       },

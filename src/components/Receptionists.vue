@@ -2,7 +2,7 @@
   <div id="receptionists">
     <hr />
 
-    <h1 class="text-center">Employees Page</h1>
+    <h1 class="text-center">Receptionists Page</h1>
 
     <v-data-table
       :headers="headers"
@@ -21,11 +21,11 @@
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                New Employee
+                New Receptionist
               </v-btn>
             </template>
 
-            <v-card v-if="formTitle === 'New Employee'">
+            <v-card v-if="formTitle === 'New Receptionist'">
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
@@ -56,11 +56,10 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                      <v-select
-                        :items="userRules"
-                        label="Rule"
-                        v-model="newItem.role"
-                      ></v-select>
+                      <v-text-field
+                        v-model="newItem.email"
+                        label="Email-Address"
+                      ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
@@ -93,7 +92,7 @@
               </v-card-actions>
             </v-card>
 
-            <v-card v-if="formTitle === 'Edit Employee'">
+            <v-card v-if="formTitle === 'Edit Receptionist'">
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
@@ -124,24 +123,9 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                      <v-select
-                        :items="userRules"
-                        label="Rule"
-                        v-model="editedItem.role"
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="editedItem.userName"
-                        label="Username"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.password"
-                        label="Password"
+                        v-model="editedItem.email"
+                        label="Email-Address"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -185,6 +169,14 @@
         </v-toolbar>
       </template>
 
+      <template slot="item.switch" slot-scope="{ item }">
+        <v-switch
+          :input-value="item.isActive"
+          color="success"
+          @click.stop="setReceptionistActivity(item.id, !item.isActive)"
+        ></v-switch>
+      </template>
+
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
 
@@ -199,7 +191,7 @@
           icon="mdi-cloud-alert"
           class="mt-4"
         >
-          There Are No Employees.
+          There Are No Receptionist.
         </v-alert>
       </template>
     </v-data-table>
@@ -207,7 +199,7 @@
 </template>
 
 <script>
-import EmployeeDataService from "@/lib/EmployeeDataService.js";
+import ReceptionistDataService from "@/lib/ReceptionistDataService.js";
 
 export default {
   name: "Receptionists",
@@ -230,15 +222,15 @@ export default {
       },
       { text: "Gender", value: "gender", sortable: false },
       { text: "Phone-Number", value: "phone", sortable: false },
-      { text: "User-Rule", value: "role", sortable: false },
+      { text: "Email-Address", value: "email", sortable: false },
       { text: "Created Time", value: "createdAt" },
       { text: "Last Update Time", value: "updatedAt" },
+      { text: "Account Activity", value: "isActive" },
+      { text: "Deactivate/Activate", value: "switch", sortable: false },
       { text: "Actions", value: "actions", sortable: false },
     ],
 
     genders: ["MALE", "FEMALE"],
-
-    userRules: ["RECEPTIONIST"],
 
     desserts: [],
 
@@ -247,43 +239,37 @@ export default {
     newItem: {
       fullName: "",
       gender: "",
+      phone: "",
+      email: "",
       userName: "",
       password: "",
-      phone: "",
-      role: "",
     },
 
     customerEdit: {
       fullName: "",
       gender: "",
-      userName: "",
-      password: "",
       phone: "",
-      role: "",
+      email: "",
     },
 
     editedItem: {
       fullName: "",
       gender: "",
-      userName: "",
-      password: "",
       phone: "",
-      role: "",
+      email: "",
     },
 
     defaultItem: {
       fullName: "",
       gender: "",
-      userName: "",
-      password: "",
       phone: "",
-      role: "",
+      email: "",
     },
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Employee" : "Edit Employee";
+      return this.editedIndex === -1 ? "New Receptionist" : "Edit Receptionist";
     },
   },
 
@@ -308,7 +294,7 @@ export default {
   methods: {
     // load records from database;
     loadRecords() {
-      EmployeeDataService.findAllEmployees()
+      ReceptionistDataService.findAllReceptionists()
         .then((response) => {
           this.desserts = response.data;
 
@@ -321,15 +307,15 @@ export default {
 
     // add new record into database;
     newRecord(item) {
-      console.log("NEW EMPLOYEE REQUEST: ");
+      console.info("NEW RECEPTIONIST REQUEST: ");
 
       console.log(item);
 
-      EmployeeDataService.createNewEmployee(item)
+      ReceptionistDataService.createNewReceptionist(item)
         .then((response) => {
           this.loadRecords();
 
-          console.log("NEW EMPLOYEE RESPONSE: ");
+          console.log("NEW RECEPTIONIST RESPONSE: ");
 
           console.log(response.data);
         })
@@ -361,7 +347,7 @@ export default {
     deleteItemConfirm() {
       let deletedItem = this.desserts[this.editedIndex];
 
-      EmployeeDataService.deleteEmployee(deletedItem.id)
+      ReceptionistDataService.deleteReceptionist(deletedItem.id)
         .then((response) => {
           this.loadRecords();
 
@@ -372,7 +358,7 @@ export default {
         });
 
       console.log(
-        "DELETE EMPLOYEE NO: [" +
+        "DELETE RECEPTIONIST NO: [" +
           deletedItem.id +
           "] WITH FULL-NAME: [" +
           deletedItem.fullName +
@@ -410,20 +396,21 @@ export default {
         // customer data modeling;
         this.customerEdit.fullName = this.editedItem.fullName;
         this.customerEdit.gender = this.editedItem.gender;
-        this.customerEdit.userName = this.editedItem.userName;
-        this.customerEdit.password = this.editedItem.password;
         this.customerEdit.phone = this.editedItem.phone;
-        this.customerEdit.role = this.editedItem.role;
+        this.customerEdit.email = this.editedItem.email;
 
-        console.log("UPDATED EMPLOYEE REQUEST: ");
+        console.log("UPDATED RECEPTIONIST REQUEST: ");
 
         console.log(this.customerEdit);
 
-        EmployeeDataService.updateEmployee(updatedItem.id, this.customerEdit)
+        ReceptionistDataService.updateReceptionist(
+          updatedItem.id,
+          this.customerEdit
+        )
           .then((response) => {
             this.loadRecords();
 
-            console.log("UPDATED EMPLOYEE RESPONSE: ");
+            console.log("UPDATED RECEPTIONIST RESPONSE: ");
 
             console.log(response.data);
           })
@@ -443,9 +430,37 @@ export default {
       } else {
         this.desserts.push(this.editedItem);
 
-        console.log("THE NEW EMPLOYEE DATA: " + this.newItem);
+        console.log("THE NEW RECEPTIONIST DATA: " + this.newItem);
       }
       this.close();
+    },
+
+    setReceptionistActivity(receptionistId, activityValue) {
+      if (activityValue == false) {
+        ReceptionistDataService.deactivateReceptionist(receptionistId)
+          .then((response) => {
+            this.loadRecords();
+
+            console.log("DEACTIVATE RECEPTIONIST WITH ID: " + receptionistId);
+
+            console.log(response.status);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (activityValue == true) {
+        ReceptionistDataService.activateReceptionist(receptionistId)
+          .then((response) => {
+            this.loadRecords();
+
+            console.log("ACTIVATE RECEPTIONIST WITH ID: " + receptionistId);
+
+            console.log(response.status);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     },
   },
 };
