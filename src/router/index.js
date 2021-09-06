@@ -6,7 +6,7 @@ import Home from "../views/Home"; // or Home.vue
 import Manager from "../views/Manager";
 
 // components importing:-
-import Employees from "../components/Employees";
+import Receptionists from "../components/Receptionists";
 import Doctors from "../components/Doctors";
 
 Vue.use(VueRouter);
@@ -23,9 +23,9 @@ const routes = [
     component: Manager,
     children: [
       {
-        path: "/manager/employees",
-        name: "Employees",
-        component: Employees,
+        path: "/manager/Receptionists",
+        name: "Receptionists",
+        component: Receptionists,
       },
       {
         path: "/manager/doctors",

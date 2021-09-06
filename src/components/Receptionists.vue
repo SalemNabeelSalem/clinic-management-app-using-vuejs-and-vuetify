@@ -1,5 +1,5 @@
 <template>
-  <div id="employees">
+  <div id="receptionists">
     <hr />
 
     <h1 class="text-center">Employees Page</h1>
@@ -210,7 +210,7 @@
 import EmployeeDataService from "@/lib/EmployeeDataService.js";
 
 export default {
-  name: "Employees",
+  name: "Receptionists",
 
   components: {},
 

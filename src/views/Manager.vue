@@ -2,21 +2,7 @@
   <div id="manager">
     <v-app id="inspire">
       <v-navigation-drawer v-model="drawer" app>
-        <v-system-bar></v-system-bar>
-
         <v-list shaped>
-          <v-list-item link>
-            <v-list-item-content>
-              <v-list-item-title class="text-h6">
-                Anwar Nasser
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-subheader>Control Panel</v-subheader>
-
-          <v-divider></v-divider>
-
           <v-list-item-group v-model="selectedItem" color="primary">
             <v-list-item v-for="(item, i) in items" :key="i" :to="item.link">
               <v-list-item-icon>
@@ -59,9 +45,9 @@ export default {
     selectedItem: 1,
     items: [
       {
-        text: "Employees",
+        text: "Receptionists",
         icon: "mdi-account",
-        link: "/manager/employees",
+        link: "/manager/receptionists",
       },
       {
         text: "Doctors",
