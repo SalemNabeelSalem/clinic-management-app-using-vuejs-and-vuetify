@@ -199,7 +199,7 @@
 </template>
 
 <script>
-import ReceptionistDataService from "@/lib/ReceptionistDataService.js";
+import ReceptionistDataService from "@/libs/ReceptionistDataService.js";
 
 export default {
   name: "Receptionists",
@@ -436,7 +436,7 @@ export default {
     },
 
     setReceptionistActivity(receptionistId, activityValue) {
-      if (activityValue == false) {
+      if (activityValue === false) {
         ReceptionistDataService.deactivateReceptionist(receptionistId)
           .then((response) => {
             this.loadRecords();
@@ -448,7 +448,7 @@ export default {
           .catch((e) => {
             console.log(e);
           });
-      } else if (activityValue == true) {
+      } else if (activityValue === true) {
         ReceptionistDataService.activateReceptionist(receptionistId)
           .then((response) => {
             this.loadRecords();

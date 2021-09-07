@@ -56,6 +56,13 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="newItem.email"
+                        label="Email-Address"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="4">
                       <v-select
                         :items="doctorTypes"
                         label="Type"
@@ -124,25 +131,18 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="editedItem.email"
+                        label="Email-Address"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="4">
                       <v-select
                         :items="doctorTypes"
                         label="Rule"
                         v-model="editedItem.type"
                       ></v-select>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.userName"
-                        label="Username"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="editedItem.password"
-                        label="Password"
-                      ></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -185,6 +185,14 @@
         </v-toolbar>
       </template>
 
+      <template slot="item.switch" slot-scope="{ item }">
+        <v-switch
+          :input-value="item.isActive"
+          color="success"
+          @click.stop="setDoctorActivity(item.id, !item.isActive)"
+        ></v-switch>
+      </template>
+
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
 
@@ -207,7 +215,7 @@
 </template>
 
 <script>
-import DoctorDataService from "@/lib/DoctorDataService.js";
+import DoctorDataService from "@/libs/DoctorDataService.js";
 
 export default {
   name: "Doctors",
@@ -230,15 +238,18 @@ export default {
       },
       { text: "Gender", value: "gender", sortable: false },
       { text: "Phone-Number", value: "phone", sortable: false },
+      { text: "Email-Address", value: "email", sortable: false },
       { text: "Type", value: "type", sortable: false },
       { text: "Created Time", value: "createdAt" },
       { text: "Last Update Time", value: "updatedAt" },
+      { text: "Account Activity", value: "isActive" },
+      { text: "Deactivate/Activate", value: "switch", sortable: false },
       { text: "Actions", value: "actions", sortable: false },
     ],
 
     genders: ["MALE", "FEMALE"],
 
-    doctorTypes: ["GENERAL"],
+    doctorTypes: ["GENERAL", "PEDIATRICIAN", "CARDIOLOGIST"],
 
     desserts: [],
 
@@ -248,6 +259,7 @@ export default {
       fullName: "",
       gender: "",
       phone: "",
+      email: "",
       type: "",
       userName: "",
       password: "",
@@ -257,24 +269,23 @@ export default {
       fullName: "",
       gender: "",
       phone: "",
+      email: "",
       type: "",
-      userName: "",
-      password: "",
     },
 
     editedItem: {
       fullName: "",
       gender: "",
       phone: "",
+      email: "",
       type: "",
-      userName: "",
-      password: "",
     },
 
     defaultItem: {
       fullName: "",
       gender: "",
       phone: "",
+      email: "",
       type: "",
       userName: "",
       password: "",
@@ -411,9 +422,8 @@ export default {
         this.customerEdit.fullName = this.editedItem.fullName;
         this.customerEdit.gender = this.editedItem.gender;
         this.customerEdit.phone = this.editedItem.phone;
+        this.customerEdit.email = this.editedItem.email;
         this.customerEdit.type = this.editedItem.type;
-        this.customerEdit.userName = this.editedItem.userName;
-        this.customerEdit.password = this.editedItem.password;
 
         console.log("UPDATED DOCTOR REQUEST: ");
 
@@ -446,6 +456,34 @@ export default {
         console.log("THE NEW DOCTOR DATA: " + this.newItem);
       }
       this.close();
+    },
+
+    setDoctorActivity(doctorId, activityValue) {
+      if (activityValue === false) {
+        DoctorDataService.deactivateDoctor(doctorId)
+          .then((response) => {
+            this.loadRecords();
+
+            console.log("DEACTIVATE DOCTOR WITH ID: " + doctorId);
+
+            console.log(response.status);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (activityValue === true) {
+        DoctorDataService.activateDoctor(doctorId)
+          .then((response) => {
+            this.loadRecords();
+
+            console.log("ACTIVATE DOCTOR WITH ID: " + doctorId);
+
+            console.log(response.status);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     },
   },
 };

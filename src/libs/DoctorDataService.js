@@ -13,6 +13,14 @@ class DoctorDataService {
     return http.put("/doctors/" + id, data);
   }
 
+  deactivateDoctor(id) {
+    return http.delete("/doctors/" + id + "/deactivate");
+  }
+
+  activateDoctor(id) {
+    return http.put("/doctors/" + id + "/activate");
+  }
+
   deleteDoctor(id) {
     return http.delete("/doctors/" + id);
   }
