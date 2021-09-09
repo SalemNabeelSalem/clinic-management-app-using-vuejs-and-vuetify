@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 // views importing:-
 import Home from "../views/Home"; // or Home.vue
 import ManagerDashboard from "../views/ManagerDashboard";
+import ReceptionistDashboard from "../views/ReceptionistDashboard";
 
 // components importing:-
 import Receptionists from "../components/Receptionists";
@@ -24,21 +25,26 @@ const routes = [
     component: Login,
   },
   {
-    path: "/manager",
-    name: "Manager",
+    path: "/manager-dashboard",
+    name: "Manager-Dashboard",
     component: ManagerDashboard,
     children: [
       {
-        path: "/manager/receptionists",
+        path: "/manager-dashboard/receptionists",
         name: "Receptionists",
         component: Receptionists,
       },
       {
-        path: "/manager/doctors",
+        path: "/manager-dashboard/doctors",
         name: "Doctors",
         component: Doctors,
       },
     ],
+  },
+  {
+    path: "/recep-dashboard",
+    name: "Receptionist-Dashboard",
+    component: ReceptionistDashboard,
   },
   {
     path: "/about",

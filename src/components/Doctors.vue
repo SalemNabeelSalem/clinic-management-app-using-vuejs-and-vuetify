@@ -215,6 +215,7 @@
 </template>
 
 <script>
+// @ is an alias to /src
 import DoctorDataService from "@/libs/DoctorDataService.js";
 
 export default {

@@ -27,15 +27,19 @@
           <router-view></router-view>
         </v-col>
       </v-container>
+
+      <Footer />
     </v-app>
   </div>
 </template>
 
 <script>
+import Footer from "@/components/global/Footer";
+
 export default {
   name: "manager-dashboard",
 
-  components: {},
+  components: { Footer },
 
   data: () => ({
     // v-app settings:
@@ -47,12 +51,12 @@ export default {
       {
         text: "Receptionists",
         icon: "mdi-account",
-        link: "/manager/receptionists",
+        link: "/manager-dashboard/receptionists",
       },
       {
         text: "Doctors",
         icon: "mdi-doctor",
-        link: "/manager/doctors",
+        link: "/manager-dashboard/doctors",
       },
     ],
   }),

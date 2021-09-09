@@ -6,8 +6,6 @@
 export default {
   name: "Test",
 
-  components: {},
-
   data: () => ({}),
 };
 </script>
