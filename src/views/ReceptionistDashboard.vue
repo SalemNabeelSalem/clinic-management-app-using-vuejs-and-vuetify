@@ -1,25 +1,45 @@
 <template>
   <div class="receptionist-dashboard">
     <v-app>
-      <v-card color="basil">
-        <v-card-title class="text-center justify-center py-6">
-          <h1 class="font-weight-bold text-h2 basil--text">BASiL</h1>
-        </v-card-title>
+      <nav>
+        <v-toolbar>
+          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-        <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
-          <v-tab v-for="item in items" :key="item">
-            {{ item }}
-          </v-tab>
-        </v-tabs>
+          <v-toolbar-title>Receptionist Dashboard</v-toolbar-title>
 
-        <v-tabs-items v-model="tab">
-          <v-tab-item v-for="item in items" :key="item">
-            <v-card color="basil" flat>
-              <v-card-text>{{ text }}</v-card-text>
-            </v-card>
-          </v-tab-item>
-        </v-tabs-items>
-      </v-card>
+          <v-spacer></v-spacer>
+
+          <v-btn icon>
+            <v-icon>mdi-export</v-icon>
+          </v-btn>
+        </v-toolbar>
+      </nav>
+
+      <v-navigation-drawer app v-model="drawer" class="primary">
+        <v-list shaped>
+          <v-subheader class="white--text text-capitalize text-h6">
+            sections
+          </v-subheader>
+
+          <v-list-item-group v-model="selectedItem" color="primary">
+            <v-list-item v-for="(item, i) in items" :key="i" :to="item.link">
+              <v-list-item-icon>
+                <v-icon v-text="item.icon"></v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title
+                  v-text="item.text"
+                  class="white--text font-weight-medium"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+
+      <p>Hello</p>
+      <span class="iconify" data-icon="maki:doctor"></span>
     </v-app>
   </div>
 </template>
@@ -29,24 +49,25 @@
 export default {
   name: "Receptionist-Dashboard",
 
-  data() {
-    return {
-      tab: null,
-      items: ["Appetizers", "Entrees", "Deserts", "Cocktails"],
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    };
-  },
+  data: () => ({
+    drawer: false,
 
-  components: {},
+    selectedItem: 1,
+
+    items: [
+      {
+        text: "Patients-Reservations",
+        icon: "mdi-doctor",
+        link: "TEST1",
+      },
+      {
+        text: "TEST2",
+        icon: "mdi-account",
+        link: "TEST2",
+      },
+    ],
+  }),
 };
 </script>
 
-<style lang="scss" scoped>
-/* Helper classes */
-.basil {
-  background-color: #fffbe6 !important;
-}
-.basil--text {
-  color: #356859 !important;
-}
-</style>
+<style lang="scss" scoped></style>

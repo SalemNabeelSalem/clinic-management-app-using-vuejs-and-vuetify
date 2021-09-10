@@ -144,11 +144,12 @@
             </v-card>
           </v-dialog>
 
-          <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-dialog v-model="dialogDelete" max-width="550px">
             <v-card>
               <v-card-title class="text-h6">
-                Are you sure want to delete employee no:
-                <span class="red--text"> {{ editedItem.id }}</span> ?
+                Are you sure want to delete:&nbsp;
+                <span class="red--text"> {{ editedItem.fullName }}</span>
+                &nbsp;?
               </v-card-title>
 
               <v-card-actions>
@@ -199,12 +200,11 @@
 </template>
 
 <script>
+// @ is an alias to /src
 import ReceptionistDataService from "@/libs/ReceptionistDataService.js";
 
 export default {
   name: "Receptionists",
-
-  components: {},
 
   data: () => ({
     dialog: false,

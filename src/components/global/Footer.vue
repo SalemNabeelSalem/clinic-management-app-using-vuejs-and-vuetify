@@ -17,8 +17,10 @@
         </v-card-title>
 
         <v-card-text class="py-2 white--text text-center">
-          {{ new Date().getFullYear() }} —
-          <strong>Final Project B5-IT [Anwar]</strong>
+          {{ new Date().getFullYear() }} — Final Project B5-IT
+          <ul style="list-style-type: none">
+            <li><strong>Anwar Nasser - ******</strong></li>
+          </ul>
         </v-card-text>
       </v-card>
     </v-footer>

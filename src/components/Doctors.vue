@@ -160,11 +160,11 @@
             </v-card>
           </v-dialog>
 
-          <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-dialog v-model="dialogDelete" max-width="550px">
             <v-card>
               <v-card-title class="text-h6">
-                Are you sure want to delete doctor no:
-                <span class="red--text"> {{ editedItem.id }}</span> ?
+                Are you sure want to delete:&nbsp;
+                <span class="red--text">{{ editedItem.fullName }}</span> &nbsp;?
               </v-card-title>
 
               <v-card-actions>
@@ -220,8 +220,6 @@ import DoctorDataService from "@/libs/DoctorDataService.js";
 
 export default {
   name: "Doctors",
-
-  components: {},
 
   data: () => ({
     dialog: false,
