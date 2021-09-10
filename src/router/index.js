@@ -9,6 +9,8 @@ import ReceptionistDashboard from "../views/ReceptionistDashboard";
 // components importing:-
 import Receptionists from "../components/Receptionists";
 import Doctors from "../components/Doctors";
+import PatientsReservations from "../components/PatientsReservations";
+import PatientsReservationsReports from "../components/PatientsReservationsReports";
 import Login from "../components/Login";
 
 Vue.use(VueRouter);
@@ -18,11 +20,6 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
   },
   {
     path: "/manager-dashboard",
@@ -42,9 +39,26 @@ const routes = [
     ],
   },
   {
-    path: "/recep-dashboard",
+    path: "/recep-dashboard/:recepId",
     name: "Receptionist-Dashboard",
     component: ReceptionistDashboard,
+    children: [
+      {
+        path: "/recep-dashboard/:recepId/patients-reservations",
+        name: "PatientsReservations",
+        component: PatientsReservations,
+      },
+      {
+        path: "/recep-dashboard/:recepId/patients-reservations-reports",
+        name: "PatientsReservationsReports",
+        component: PatientsReservationsReports,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
   {
     path: "/about",

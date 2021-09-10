@@ -17,6 +17,25 @@
 
       <v-navigation-drawer app v-model="drawer" class="primary">
         <v-list shaped>
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+            </v-list-item-avatar>
+          </v-list-item>
+
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title class="text-h6 white--text">
+                Anwar Nasser
+              </v-list-item-title>
+              <v-list-item-subtitle class="yellow--text font-weight-medium">
+                john@vuetifyjs.com
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
           <v-subheader class="white--text text-capitalize text-h6">
             sections
           </v-subheader>
@@ -24,7 +43,7 @@
           <v-list-item-group v-model="selectedItem" color="primary">
             <v-list-item v-for="(item, i) in items" :key="i" :to="item.link">
               <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
+                <v-icon class="red--text" v-text="item.icon"></v-icon>
               </v-list-item-icon>
 
               <v-list-item-content>
@@ -38,8 +57,11 @@
         </v-list>
       </v-navigation-drawer>
 
-      <p>Hello</p>
-      <span class="iconify" data-icon="maki:doctor"></span>
+      <v-container fluid fill-height>
+        <v-col>
+          <router-view></router-view>
+        </v-col>
+      </v-container>
     </v-app>
   </div>
 </template>
@@ -57,13 +79,13 @@ export default {
     items: [
       {
         text: "Patients-Reservations",
-        icon: "mdi-doctor",
-        link: "TEST1",
+        icon: "mdi-hospital",
+        link: "/recep-dashboard/" + 1 + "/patients-reservations",
       },
       {
-        text: "TEST2",
-        icon: "mdi-account",
-        link: "TEST2",
+        text: "Reports",
+        icon: "mdi-chart-line",
+        link: "/recep-dashboard/" + 1 + "/patients-reservations-reports",
       },
     ],
   }),

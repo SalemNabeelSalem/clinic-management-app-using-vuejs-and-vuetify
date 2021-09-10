@@ -5,10 +5,9 @@
 </template>
 
 <script>
+// @ is an alias to /src
 export default {
   name: "About",
-
-  components: {},
 
   data: () => ({
     chartData: { doctors: 6, Receptionist: 5 },
