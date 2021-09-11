@@ -48,6 +48,7 @@
                       <v-text-field
                         v-model="newItem.fullName"
                         label="Full-Name"
+                        required
                       ></v-text-field>
                     </v-col>
 
@@ -63,6 +64,7 @@
                       <v-text-field
                         v-model="newItem.phone"
                         label="Phone-Number"
+                        required
                       ></v-text-field>
                     </v-col>
 
@@ -70,6 +72,7 @@
                       <v-text-field
                         v-model="newItem.email"
                         label="Email-Address"
+                        required
                       ></v-text-field>
                     </v-col>
 
@@ -77,6 +80,7 @@
                       <v-text-field
                         v-model="newItem.userName"
                         label="Username"
+                        required
                       ></v-text-field>
                     </v-col>
 
@@ -84,6 +88,7 @@
                       <v-text-field
                         v-model="newItem.password"
                         label="Password"
+                        required
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -115,6 +120,7 @@
                       <v-text-field
                         v-model="editedItem.fullName"
                         label="Full-Name"
+                        required
                       ></v-text-field>
                     </v-col>
 
@@ -130,6 +136,7 @@
                       <v-text-field
                         v-model="editedItem.phone"
                         label="Phone-Number"
+                        required
                       ></v-text-field>
                     </v-col>
 
@@ -137,6 +144,7 @@
                       <v-text-field
                         v-model="editedItem.email"
                         label="Email-Address"
+                        required
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -159,7 +167,7 @@
             <v-card>
               <v-card-title class="text-h6">
                 Are you sure want to delete:&nbsp;
-                <span class="red--text"> {{ editedItem.fullName }}</span>
+                <span class="red--text"> {{ editedItem.fullName }} </span>
                 &nbsp;?
               </v-card-title>
 
@@ -178,6 +186,49 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+
+          <v-dialog v-model="dialogEmailMessage" persistent max-width="600px">
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Send Email Message</span>
+              </v-card-title>
+
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                        label="Email-Address"
+                        required
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-text-field label="Message" required></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="dialogEmailMessage = false"
+                >
+                  Close
+                </v-btn>
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="dialogEmailMessage = false"
+                >
+                  Send
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-toolbar>
       </template>
 
@@ -190,9 +241,17 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon small @click="emailMessageDialog(item)" class="orange--text">
+          mdi-message
+        </v-icon>
 
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon small @click="editItem(item)" class="mx-1 green--text">
+          mdi-pencil
+        </v-icon>
+
+        <v-icon small @click="deleteItem(item)" class="red--text">
+          mdi-delete
+        </v-icon>
       </template>
 
       <template v-slot:no-data>
@@ -222,6 +281,8 @@ export default {
 
     dialogDelete: false,
 
+    dialogEmailMessage: false,
+
     search: "",
 
     headers: [
@@ -247,6 +308,11 @@ export default {
     desserts: [],
 
     editedIndex: -1,
+
+    sendEmailMessageItem: {
+      email: "",
+      text: "",
+    },
 
     newItem: {
       fullName: "",
@@ -338,6 +404,12 @@ export default {
       this.newItem = Object.assign({}, this.defaultItem);
 
       this.close();
+    },
+
+    emailMessageDialog(item) {
+      console.log(item.fullName);
+
+      this.dialogEmailMessage = true;
     },
 
     editItem(item) {
