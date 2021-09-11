@@ -76,19 +76,39 @@ export default {
 
     selectedItem: 1,
 
+    receptionistId: null,
+
     items: [
       {
         text: "Patients-Reservations",
         icon: "mdi-hospital",
-        link: "/recep-dashboard/" + 1 + "/patients-reservations",
+        link: "",
       },
       {
         text: "Reports",
         icon: "mdi-chart-line",
-        link: "/recep-dashboard/" + 1 + "/patients-reservations-reports",
+        link: "",
       },
     ],
   }),
+
+  mounted() {
+    this.getRecepIdFromUrlParameters();
+  },
+
+  methods: {
+    getRecepIdFromUrlParameters() {
+      this.receptionistId = this.$route.params.recepId;
+
+      this.items[0]["link"] =
+        "/recep-dashboard/" + this.receptionistId + "/patients-reservations";
+
+      this.items[1]["link"] =
+        "/recep-dashboard/" +
+        this.receptionistId +
+        "/patients-reservations-reports";
+    },
+  },
 };
 </script>
 

@@ -7,10 +7,21 @@
     <v-data-table
       :headers="headers"
       :items="desserts"
+      :search="search"
       sort-by="calories"
       class="elevation-1"
     >
       <template v-slot:top>
+        <v-card-title>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+
         <v-toolbar flat>
           <v-toolbar-title>CRUD Operations</v-toolbar-title>
 
@@ -226,7 +237,8 @@ export default {
 
     dialogDelete: false,
 
-    // data-table headers;
+    search: "",
+
     headers: [
       { text: "Doctor.No", value: "id" },
       {
