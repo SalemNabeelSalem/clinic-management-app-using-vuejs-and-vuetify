@@ -193,6 +193,59 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+
+          <v-dialog v-model="dialogEmailMessage" persistent max-width="600px">
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Send Email Message</span>
+              </v-card-title>
+
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="sendEmailMessageItem.emailAddress"
+                        label="Email-Address"
+                        required
+                        readonly
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="sendEmailMessageItem.senderName"
+                        label="Sender-Name"
+                        required
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="sendEmailMessageItem.messageContent"
+                        label="Message-Content"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="dialogEmailMessage = false"
+                >
+                  Close
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="sendEmailMessage()">
+                  Send
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-toolbar>
       </template>
 
@@ -205,9 +258,17 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon small @click="emailMessageDialog(item)" class="orange--text">
+          mdi-message
+        </v-icon>
 
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon small @click="editItem(item)" class="mx-1 green--text">
+          mdi-pencil
+        </v-icon>
+
+        <v-icon small @click="deleteItem(item)" class="red--text">
+          mdi-delete
+        </v-icon>
       </template>
 
       <template v-slot:no-data>
@@ -228,6 +289,7 @@
 <script>
 // @ is an alias to /src
 import DoctorDataService from "@/libs/DoctorDataService.js";
+import NotificationsDataService from "@/libs/NotificationsDataService";
 
 export default {
   name: "Doctors",
@@ -236,6 +298,8 @@ export default {
     dialog: false,
 
     dialogDelete: false,
+
+    dialogEmailMessage: false,
 
     search: "",
 
@@ -265,6 +329,12 @@ export default {
     desserts: [],
 
     editedIndex: -1,
+
+    sendEmailMessageItem: {
+      emailAddress: "",
+      senderName: "",
+      messageContent: "",
+    },
 
     newItem: {
       fullName: "",
@@ -364,6 +434,14 @@ export default {
       this.close();
     },
 
+    emailMessageDialog(item) {
+      this.sendEmailMessageItem["emailAddress"] = Object.assign({}, item)[
+        "email"
+      ];
+
+      this.dialogEmailMessage = true;
+    },
+
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
 
@@ -423,6 +501,24 @@ export default {
 
         this.editedIndex = -1;
       });
+    },
+
+    sendEmailMessage() {
+      NotificationsDataService.sendEmailMessage(this.sendEmailMessageItem)
+        .then((response) => {
+          this.loadRecords();
+
+          console.log("SEND EMAIL MESSAGE: ");
+
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      this.sendEmailMessageItem = {};
+
+      this.dialogEmailMessage = false;
     },
 
     save() {
