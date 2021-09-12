@@ -198,13 +198,27 @@
                   <v-row>
                     <v-col cols="12">
                       <v-text-field
+                        v-model="sendEmailMessageItem.emailAddress"
                         label="Email-Address"
+                        required
+                        readonly
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="sendEmailMessageItem.senderName"
+                        label="Sender-Name"
                         required
                       ></v-text-field>
                     </v-col>
 
                     <v-col cols="12">
-                      <v-text-field label="Message" required></v-text-field>
+                      <v-text-field
+                        v-model="sendEmailMessageItem.messageContent"
+                        label="Message-Content"
+                        required
+                      ></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -219,11 +233,7 @@
                 >
                   Close
                 </v-btn>
-                <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="dialogEmailMessage = false"
-                >
+                <v-btn color="blue darken-1" text @click="sendEmailMessage()">
                   Send
                 </v-btn>
               </v-card-actions>
@@ -272,6 +282,7 @@
 <script>
 // @ is an alias to /src
 import ReceptionistDataService from "@/libs/ReceptionistDataService.js";
+import NotificationsDataService from "@/libs/NotificationsDataService";
 
 export default {
   name: "Receptionists",
@@ -310,8 +321,9 @@ export default {
     editedIndex: -1,
 
     sendEmailMessageItem: {
-      email: "",
-      text: "",
+      emailAddress: "",
+      senderName: "",
+      messageContent: "",
     },
 
     newItem: {
@@ -407,7 +419,9 @@ export default {
     },
 
     emailMessageDialog(item) {
-      console.log(item.fullName);
+      this.sendEmailMessageItem["emailAddress"] = Object.assign({}, item)[
+        "email"
+      ];
 
       this.dialogEmailMessage = true;
     },
@@ -471,6 +485,24 @@ export default {
 
         this.editedIndex = -1;
       });
+    },
+
+    sendEmailMessage() {
+      NotificationsDataService.sendEmailMessage(this.sendEmailMessageItem)
+        .then((response) => {
+          this.loadRecords();
+
+          console.log("SEND EMAIL MESSAGE: ");
+
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      this.sendEmailMessageItem = {};
+
+      this.dialogEmailMessage = false;
     },
 
     save() {
