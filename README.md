@@ -1,6 +1,6 @@
 # clinic-management-app-using-vuajs-and-vuetify
 
-This is a final graduation project on information technology department at the university of aden, it's a simple clinic management application using vuejs and vuetify material design framework.
+This is a final graduation project on information technology department at the University of Aden, it's a simple clinic management application using vuejs and vuetify material design framework.
 
 ## Vue Project Manager GUI
 ```
