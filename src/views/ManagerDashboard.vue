@@ -63,6 +63,11 @@ export default {
         icon: "mdi-beaker-question",
         link: "/manager-dashboard/laboratories",
       },
+      {
+        text: "Managers",
+        icon: "mdi-hammer",
+        link: "/manager-dashboard/managers",
+      },
     ],
   }),
 };
