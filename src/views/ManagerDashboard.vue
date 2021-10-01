@@ -58,6 +58,11 @@ export default {
         icon: "mdi-doctor",
         link: "/manager-dashboard/doctors",
       },
+      {
+        text: "Laboratories",
+        icon: "mdi-beaker-question",
+        link: "/manager-dashboard/laboratories",
+      },
     ],
   }),
 };

@@ -9,6 +9,7 @@ import ReceptionistDashboard from "../views/ReceptionistDashboard";
 // components importing:-
 import Receptionists from "../components/Receptionists";
 import Doctors from "../components/Doctors";
+import Laboratories from "../components/Laboratories";
 import PatientsReservations from "../components/PatientsReservations";
 import PatientsReservationsReports from "../components/PatientsReservationsReports";
 import Login from "../components/Login";
@@ -35,6 +36,11 @@ const routes = [
         path: "/manager-dashboard/doctors",
         name: "Doctors",
         component: Doctors,
+      },
+      {
+        path: "/manager-dashboard/laboratories",
+        name: "Laboratories",
+        component: Laboratories,
       },
     ],
   },
