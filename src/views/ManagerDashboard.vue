@@ -65,8 +65,13 @@ export default {
       },
       {
         text: "Managers",
-        icon: "mdi-hammer",
+        icon: "mdi-account-hard-hat",
         link: "/manager-dashboard/managers",
+      },
+      {
+        text: "Reports",
+        icon: "mdi-layers-search-outline",
+        link: "/manager-dashboard/reports",
       },
     ],
   }),

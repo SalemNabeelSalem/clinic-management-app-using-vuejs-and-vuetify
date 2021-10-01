@@ -1,8 +1,8 @@
 <template>
-  <div id="receptionists">
+  <div id="doctor">
     <hr />
 
-    <h1 class="text-center">Receptionists Page</h1>
+    <h1 class="text-center">Doctors Page</h1>
 
     <v-data-table
       :headers="headers"
@@ -32,11 +32,11 @@
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                New Receptionist
+                New Doctor
               </v-btn>
             </template>
 
-            <v-card v-if="formTitle === 'New Receptionist'">
+            <v-card v-if="formTitle === 'New Doctor'">
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
@@ -48,7 +48,6 @@
                       <v-text-field
                         v-model="newItem.fullName"
                         label="Full-Name"
-                        required
                       ></v-text-field>
                     </v-col>
 
@@ -64,7 +63,6 @@
                       <v-text-field
                         v-model="newItem.phone"
                         label="Phone-Number"
-                        required
                       ></v-text-field>
                     </v-col>
 
@@ -72,15 +70,21 @@
                       <v-text-field
                         v-model="newItem.email"
                         label="Email-Address"
-                        required
                       ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="4">
+                      <v-select
+                        :items="doctorTypes"
+                        label="Type"
+                        v-model="newItem.type"
+                      ></v-select>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         v-model="newItem.userName"
                         label="Username"
-                        required
                       ></v-text-field>
                     </v-col>
 
@@ -88,7 +92,6 @@
                       <v-text-field
                         v-model="newItem.password"
                         label="Password"
-                        required
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -108,7 +111,7 @@
               </v-card-actions>
             </v-card>
 
-            <v-card v-if="formTitle === 'Edit Receptionist'">
+            <v-card v-if="formTitle === 'Edit Doctor'">
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
@@ -120,7 +123,6 @@
                       <v-text-field
                         v-model="editedItem.fullName"
                         label="Full-Name"
-                        required
                       ></v-text-field>
                     </v-col>
 
@@ -136,7 +138,6 @@
                       <v-text-field
                         v-model="editedItem.phone"
                         label="Phone-Number"
-                        required
                       ></v-text-field>
                     </v-col>
 
@@ -144,8 +145,15 @@
                       <v-text-field
                         v-model="editedItem.email"
                         label="Email-Address"
-                        required
                       ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="4">
+                      <v-select
+                        :items="doctorTypes"
+                        label="Rule"
+                        v-model="editedItem.type"
+                      ></v-select>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -167,8 +175,7 @@
             <v-card>
               <v-card-title class="text-h6">
                 Are you sure want to delete:&nbsp;
-                <span class="red--text"> {{ editedItem.fullName }} </span>
-                &nbsp;?
+                <span class="red--text">{{ editedItem.fullName }}</span> &nbsp;?
               </v-card-title>
 
               <v-card-actions>
@@ -246,11 +253,11 @@
         <v-switch
           :input-value="item.isActive"
           color="success"
-          @click.stop="setReceptionistActivity(item.id, !item.isActive)"
+          @click.stop="setDoctorActivity(item.id, !item.isActive)"
         ></v-switch>
       </template>
 
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click="emailMessageDialog(item)" class="orange--text">
           mdi-message
         </v-icon>
@@ -272,7 +279,7 @@
           icon="mdi-cloud-alert"
           class="mt-4"
         >
-          There Are No Receptionist.
+          There Are No Doctors.
         </v-alert>
       </template>
     </v-data-table>
@@ -281,11 +288,11 @@
 
 <script>
 // @ is an alias to /src
-import ReceptionistDataService from "@/libs/ReceptionistDataService.js";
+import DoctorDataService from "@/libs/DoctorDataService.js";
 import NotificationsDataService from "@/libs/NotificationsDataService";
 
 export default {
-  name: "Receptionists",
+  name: "Doctors",
 
   data: () => ({
     dialog: false,
@@ -297,7 +304,7 @@ export default {
     search: "",
 
     headers: [
-      { text: "Employee.No", value: "id" },
+      { text: "Doctor.No", value: "id" },
       {
         text: "Full-Name",
         align: "start",
@@ -307,6 +314,7 @@ export default {
       { text: "Gender", value: "gender", sortable: false },
       { text: "Phone-Number", value: "phone", sortable: false },
       { text: "Email-Address", value: "email", sortable: false },
+      { text: "Type", value: "type", sortable: false },
       { text: "Created Time", value: "createdAt" },
       { text: "Last Update Time", value: "updatedAt" },
       { text: "Account Activity", value: "isActive" },
@@ -315,6 +323,8 @@ export default {
     ],
 
     genders: ["MALE", "FEMALE"],
+
+    doctorTypes: ["GENERAL", "PEDIATRICIAN", "CARDIOLOGIST"],
 
     desserts: [],
 
@@ -331,6 +341,7 @@ export default {
       gender: "",
       phone: "",
       email: "",
+      type: "",
       userName: "",
       password: "",
     },
@@ -340,6 +351,7 @@ export default {
       gender: "",
       phone: "",
       email: "",
+      type: "",
     },
 
     editedItem: {
@@ -347,6 +359,7 @@ export default {
       gender: "",
       phone: "",
       email: "",
+      type: "",
     },
 
     defaultItem: {
@@ -354,12 +367,15 @@ export default {
       gender: "",
       phone: "",
       email: "",
+      type: "",
+      userName: "",
+      password: "",
     },
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Receptionist" : "Edit Receptionist";
+      return this.editedIndex === -1 ? "New Doctor" : "Edit Doctor";
     },
   },
 
@@ -384,7 +400,7 @@ export default {
   methods: {
     // load records from database;
     loadRecords() {
-      ReceptionistDataService.findAllReceptionists()
+      DoctorDataService.findAllDoctors()
         .then((response) => {
           this.desserts = response.data;
 
@@ -397,15 +413,15 @@ export default {
 
     // add new record into database;
     newRecord(item) {
-      console.info("NEW RECEPTIONIST REQUEST: ");
+      console.log("NEW DOCTOR REQUEST: ");
 
       console.log(item);
 
-      ReceptionistDataService.createNewReceptionist(item)
+      DoctorDataService.createNewDoctor(item)
         .then((response) => {
           this.loadRecords();
 
-          console.log("NEW RECEPTIONIST RESPONSE: ");
+          console.log("NEW DOCTOR RESPONSE: ");
 
           console.log(response.data);
         })
@@ -445,7 +461,7 @@ export default {
     deleteItemConfirm() {
       let deletedItem = this.desserts[this.editedIndex];
 
-      ReceptionistDataService.deleteReceptionist(deletedItem.id)
+      DoctorDataService.deleteDoctor(deletedItem.id)
         .then((response) => {
           this.loadRecords();
 
@@ -456,7 +472,7 @@ export default {
         });
 
       console.log(
-        "DELETE RECEPTIONIST NO: [" +
+        "DELETE DOCTOR NO: [" +
           deletedItem.id +
           "] WITH FULL-NAME: [" +
           deletedItem.fullName +
@@ -514,19 +530,17 @@ export default {
         this.customerEdit.gender = this.editedItem.gender;
         this.customerEdit.phone = this.editedItem.phone;
         this.customerEdit.email = this.editedItem.email;
+        this.customerEdit.type = this.editedItem.type;
 
-        console.log("UPDATED RECEPTIONIST REQUEST: ");
+        console.log("UPDATED DOCTOR REQUEST: ");
 
         console.log(this.customerEdit);
 
-        ReceptionistDataService.updateReceptionist(
-          updatedItem.id,
-          this.customerEdit
-        )
+        DoctorDataService.updateDoctor(updatedItem.id, this.customerEdit)
           .then((response) => {
             this.loadRecords();
 
-            console.log("UPDATED RECEPTIONIST RESPONSE: ");
+            console.log("UPDATED DOCTOR RESPONSE: ");
 
             console.log(response.data);
           })
@@ -537,7 +551,7 @@ export default {
         Object.assign(this.desserts[this.editedIndex], this.editedItem);
 
         console.log(
-          "EDITED EMPLOYEE NO: [" +
+          "EDITED DOCTOR NO: [" +
             updatedItem.id +
             "] WITH FULL-NAME: [" +
             updatedItem.fullName +
@@ -546,18 +560,18 @@ export default {
       } else {
         this.desserts.push(this.editedItem);
 
-        console.log("THE NEW RECEPTIONIST DATA: " + this.newItem);
+        console.log("THE NEW DOCTOR DATA: " + this.newItem);
       }
       this.close();
     },
 
-    setReceptionistActivity(receptionistId, activityValue) {
+    setDoctorActivity(doctorId, activityValue) {
       if (activityValue === false) {
-        ReceptionistDataService.deactivateReceptionist(receptionistId)
+        DoctorDataService.deactivateDoctor(doctorId)
           .then((response) => {
             this.loadRecords();
 
-            console.log("DEACTIVATE RECEPTIONIST WITH ID: " + receptionistId);
+            console.log("DEACTIVATE DOCTOR WITH ID: " + doctorId);
 
             console.log(response.status);
           })
@@ -565,11 +579,11 @@ export default {
             console.log(e);
           });
       } else if (activityValue === true) {
-        ReceptionistDataService.activateReceptionist(receptionistId)
+        DoctorDataService.activateDoctor(doctorId)
           .then((response) => {
             this.loadRecords();
 
-            console.log("ACTIVATE RECEPTIONIST WITH ID: " + receptionistId);
+            console.log("ACTIVATE DOCTOR WITH ID: " + doctorId);
 
             console.log(response.status);
           })

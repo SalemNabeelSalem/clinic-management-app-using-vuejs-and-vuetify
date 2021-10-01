@@ -1,16 +1,18 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-// views importing:-
+// Viwes Importing:-
 import Home from "../views/Home"; // or Home.vue
 import ManagerDashboard from "../views/ManagerDashboard";
 import ReceptionistDashboard from "../views/ReceptionistDashboard";
 
-// components importing:-
-import Receptionists from "../components/Receptionists";
-import Doctors from "../components/Doctors";
-import Laboratories from "../components/Laboratories";
-import Managers from "../components/Managers";
+// Manager-Dashboard Components Importing:-
+import Receptionists from "../components/manager-dashboard/Receptionists";
+import Doctors from "../components/manager-dashboard/Doctors";
+import Laboratories from "../components/manager-dashboard/Laboratories";
+import Managers from "../components/manager-dashboard/Managers";
+import Reports from "../components/manager-dashboard/Reports";
+
 import PatientsReservations from "../components/PatientsReservations";
 import PatientsReservationsReports from "../components/PatientsReservationsReports";
 import Login from "../components/Login";
@@ -48,6 +50,11 @@ const routes = [
         name: "Managers",
         component: Managers,
       },
+      {
+        path: "/manager-dashboard/reports",
+        name: "Reports",
+        component: Reports,
+      },
     ],
   },
   {
@@ -71,15 +78,6 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
 ];
 
