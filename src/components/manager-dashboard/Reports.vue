@@ -1,6 +1,9 @@
 <template>
   <div class="reports">
-    <pie-chart :download="true" :data="chartData"></pie-chart>
+    <div class="text-center">
+      <h1>Numbers of Users:</h1>
+      <pie-chart :download="true" :data="chartData"></pie-chart>
+    </div>
   </div>
 </template>
 
@@ -10,7 +13,7 @@ export default {
   name: "Reports",
 
   data: () => ({
-    chartData: { doctors: 6, Receptionist: 5 },
+    chartData: { Doctors: 6, Receptionist: 5, Laboratories: 10, Managers: 1 },
   }),
 };
 </script>
