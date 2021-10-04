@@ -59,7 +59,10 @@
                     With supporting receptionist dashboard as a natural lead-in
                     to additional content.
                   </b-card-text>
-                  <b-button href="/recep-dashboard/1/" variant="light">
+                  <b-button
+                    href="/recep-dashboard/1/patients-reservations"
+                    variant="light"
+                  >
                     Go
                   </b-button>
                 </b-card>

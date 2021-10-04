@@ -25,7 +25,7 @@ export default {
   data: () => ({
     usersChartData: {
       Doctors: 6,
-      Receptionist: 5,
+      Receptionists: 5,
       Laboratories: 10,
       Managers: 1,
     },
