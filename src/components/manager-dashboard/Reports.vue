@@ -19,22 +19,42 @@
 
 <script>
 // @ is an alias to /src
+import ReportsDataService from "@/libs/ReportsDataService";
+
 export default {
   name: "Reports",
 
   data: () => ({
-    usersChartData: {
-      Doctors: 6,
-      Receptionists: 5,
-      Laboratories: 10,
-      Managers: 1,
+    usersChartData: {},
+
+    patientsReservationsChartData: {},
+  }),
+
+  mounted() {
+    this.usersChartDataReport();
+    this.patientsReservationsChartDataReport();
+  },
+
+  methods: {
+    usersChartDataReport() {
+      ReportsDataService.usersChartData()
+        .then((response) => {
+          this.usersChartData = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
-    patientsReservationsChartData: [
-      ["Total", 100],
-      ["Male", 40],
-      ["Female", 60],
-    ],
-  }),
+    patientsReservationsChartDataReport() {
+      ReportsDataService.patientsReservationsChartData()
+        .then((response) => {
+          this.patientsReservationsChartData = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
