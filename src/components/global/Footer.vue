@@ -19,7 +19,7 @@
         <v-card-text class="py-2 white--text text-center">
           {{ new Date().getFullYear() }} — Final Project B5-IT
           <ul style="list-style-type: none">
-            <li><strong>Anwar Nasser - ******</strong></li>
+            <li><strong>Anwar Nasser - 12345</strong></li>
           </ul>
         </v-card-text>
       </v-card>

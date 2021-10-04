@@ -5,6 +5,10 @@ class ReceptionistDataService {
     return http.get("/receptionists");
   }
 
+  findReceptionistById(id) {
+    return http.get(`/receptionists/${id}`);
+  }
+
   createNewReceptionist(data) {
     return http.post("/receptionists", data);
   }

@@ -13,8 +13,9 @@ import Laboratories from "../components/manager-dashboard/Laboratories";
 import Managers from "../components/manager-dashboard/Managers";
 import Reports from "../components/manager-dashboard/Reports";
 
-import PatientsReservations from "../components/PatientsReservations";
-import PatientsReservationsReports from "../components/PatientsReservationsReports";
+// Recepionist-Dashboard Components Importing:-
+import PatientsReservations from "../components/receptionist-dashboard/PatientsReservations";
+
 import Login from "../components/Login";
 
 Vue.use(VueRouter);
@@ -66,11 +67,6 @@ const routes = [
         path: "/recep-dashboard/:recepId/patients-reservations",
         name: "PatientsReservations",
         component: PatientsReservations,
-      },
-      {
-        path: "/recep-dashboard/:recepId/patients-reservations-reports",
-        name: "PatientsReservationsReports",
-        component: PatientsReservationsReports,
       },
     ],
   },

@@ -21,6 +21,12 @@
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
         <v-toolbar-title>Manager Dashboard</v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <v-btn icon to="/">
+          <v-icon>mdi-export</v-icon>
+        </v-btn>
       </v-app-bar>
 
       <v-container fluid fill-height>

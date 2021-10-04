@@ -9,7 +9,7 @@
 
           <v-spacer></v-spacer>
 
-          <v-btn icon>
+          <v-btn icon to="/">
             <v-icon>mdi-export</v-icon>
           </v-btn>
         </v-toolbar>
@@ -26,10 +26,10 @@
           <v-list-item link>
             <v-list-item-content>
               <v-list-item-title class="text-h6 white--text">
-                Anwar Nasser
+                {{ currentReceptionist.fullName }}
               </v-list-item-title>
               <v-list-item-subtitle class="yellow--text font-weight-medium">
-                john@vuetifyjs.com
+                {{ currentReceptionist.email }}
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -68,6 +68,8 @@
 
 <script>
 // @ is an alias to /src
+import ReceptionistDataService from "@/libs/ReceptionistDataService.js";
+
 export default {
   name: "Receptionist-Dashboard",
 
@@ -84,16 +86,17 @@ export default {
         icon: "mdi-hospital",
         link: "",
       },
-      {
-        text: "Reports",
-        icon: "mdi-chart-line",
-        link: "",
-      },
     ],
+
+    currentReceptionist: {
+      fullName: "",
+      email: "",
+    },
   }),
 
   mounted() {
     this.getRecepIdFromUrlParameters();
+    this.getCurrentReceptionist();
   },
 
   methods: {
@@ -102,11 +105,16 @@ export default {
 
       this.items[0]["link"] =
         "/recep-dashboard/" + this.receptionistId + "/patients-reservations";
+    },
 
-      this.items[1]["link"] =
-        "/recep-dashboard/" +
-        this.receptionistId +
-        "/patients-reservations-reports";
+    getCurrentReceptionist() {
+      ReceptionistDataService.findReceptionistById(this.receptionistId)
+        .then((response) => {
+          this.currentReceptionist = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
