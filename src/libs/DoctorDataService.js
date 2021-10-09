@@ -5,6 +5,10 @@ class DoctorDataService {
     return http.get("/doctors");
   }
 
+  findDoctorById(id) {
+    return http.get("/doctors/" + id);
+  }
+
   createNewDoctor(data) {
     return http.post("/doctors", data);
   }

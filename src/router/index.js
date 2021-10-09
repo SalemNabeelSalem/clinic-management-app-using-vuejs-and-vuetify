@@ -5,6 +5,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home"; // or Home.vue
 import ManagerDashboard from "../views/ManagerDashboard";
 import ReceptionistDashboard from "../views/ReceptionistDashboard";
+import DoctorDashboard from "../views/DoctorDashboard";
 
 // Manager-Dashboard Components Importing:-
 import Receptionists from "../components/manager-dashboard/Receptionists";
@@ -15,6 +16,9 @@ import Reports from "../components/manager-dashboard/Reports";
 
 // Recepionist-Dashboard Components Importing:-
 import PatientsReservations from "../components/receptionist-dashboard/PatientsReservations";
+
+// Doctor-Dashboard Components Importing:-
+import PatientsChecks from "../components/doctor-dashboard/PatientsChecks";
 
 import Login from "../components/Login";
 
@@ -67,6 +71,18 @@ const routes = [
         path: "/recep-dashboard/:recepId/patients-reservations",
         name: "PatientsReservations",
         component: PatientsReservations,
+      },
+    ],
+  },
+  {
+    path: "/doctor-dashboard/:doctorId",
+    name: "DoctorDashboard",
+    component: DoctorDashboard,
+    children: [
+      {
+        path: "/doctor-dashboard/:doctorId/patients-checks",
+        name: "PatientsChecks",
+        component: PatientsChecks,
       },
     ],
   },
