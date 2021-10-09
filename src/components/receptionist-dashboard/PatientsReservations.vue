@@ -86,6 +86,16 @@
                         label="Feeling"
                       ></v-text-field>
                     </v-col>
+
+                    <v-col cols="12" sm="6" md="4">
+                      <v-select
+                        :items="doctorsList"
+                        item-text="summary"
+                        item-value="id"
+                        label="Doctors"
+                        v-model="newItem.doctorId"
+                      ></v-select>
+                    </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -153,6 +163,16 @@
                         v-model="editedItem.feeling"
                         label="Feeling"
                       ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="4">
+                      <v-select
+                        :items="doctorsList"
+                        item-value="id"
+                        item-text="summary"
+                        label="Doctors"
+                        v-model="editedItem.doctorId"
+                      ></v-select>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -280,6 +300,7 @@
 <script>
 // @ is an alias to /src
 import PatientReservationDataService from "@/libs/PatientReservationDataService.js";
+import DoctorDataService from "@/libs/DoctorDataService.js";
 import NotificationsDataService from "@/libs/NotificationsDataService";
 
 export default {
@@ -312,10 +333,13 @@ export default {
       { text: "Feeling", value: "feeling", sortable: false },
       { text: "Created Time", value: "createdAt" },
       { text: "Last Update Time", value: "updatedAt" },
+      { text: "Doctor", value: "doctorId", sortable: false },
       { text: "Actions", value: "actions", sortable: false },
     ],
 
     genders: ["MALE", "FEMALE"],
+
+    doctorsList: [],
 
     desserts: [],
 
@@ -334,6 +358,7 @@ export default {
       phone: "",
       email: "",
       feeling: "",
+      doctorId: "",
     },
 
     customerEdit: {
@@ -343,6 +368,7 @@ export default {
       phone: "",
       email: "",
       feeling: "",
+      doctorId: "",
     },
 
     editedItem: {
@@ -352,6 +378,7 @@ export default {
       phone: "",
       email: "",
       feeling: "",
+      doctorId: "",
     },
 
     defaultItem: {
@@ -361,6 +388,7 @@ export default {
       phone: "",
       email: "",
       feeling: "",
+      doctorId: "",
     },
   }),
 
@@ -387,11 +415,22 @@ export default {
   mounted() {
     this.getRecepIdFromUrlParameters();
     this.loadRecords();
+    this.loadDoctorsList();
   },
 
   methods: {
     getRecepIdFromUrlParameters() {
       this.receptionistId = this.$route.params.recepId;
+    },
+
+    loadDoctorsList() {
+      DoctorDataService.findAllDoctorsList()
+        .then((response) => {
+          this.doctorsList = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
 
     // load records from database;
@@ -536,6 +575,7 @@ export default {
         this.customerEdit.phone = this.editedItem.phone;
         this.customerEdit.email = this.editedItem.email;
         this.customerEdit.feeling = this.editedItem.feeling;
+        this.customerEdit.doctorId = this.editedItem.doctorId;
 
         console.log("UPDATED PATIENT RESERVATION REQUEST: ");
 
