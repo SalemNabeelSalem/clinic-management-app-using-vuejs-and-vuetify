@@ -31,7 +31,11 @@
                     With supporting doctor dashboard as a natural lead-in to
                     additional content.
                   </b-card-text>
-                  <b-button href="#" variant="light">Go</b-button>
+                  <b-button
+                    href="/doctor-dashboard/1/patients-checks"
+                    variant="light"
+                    >Go</b-button
+                  >
                 </b-card>
               </div>
 
