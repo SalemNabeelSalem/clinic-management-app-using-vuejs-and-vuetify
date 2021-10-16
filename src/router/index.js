@@ -19,6 +19,7 @@ import PatientsReservations from "../components/receptionist-dashboard/PatientsR
 
 // Doctor-Dashboard Components Importing:-
 import PatientsReservationsOfDoctor from "../components/doctor-dashboard/PatientsReservations";
+import PatientCheck from "../components/doctor-dashboard/PatientCheck";
 
 import Login from "../components/Login";
 
@@ -83,6 +84,11 @@ const routes = [
         path: "/doctor-dashboard/:doctorId/patients-reservations",
         name: "PatientsReservationsOfDoctor",
         component: PatientsReservationsOfDoctor,
+      },
+      {
+        path: "/doctor-dashboard/:doctorId/patients-reservations/:reservationId/check",
+        name: "PatientCheck",
+        component: PatientCheck,
       },
     ],
   },
