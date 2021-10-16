@@ -32,6 +32,10 @@ class DoctorDataService {
   findAllDoctorsList() {
     return http.get("/doctors-list");
   }
+
+  findAllPatientsReservationsOfDoctor(id) {
+    return http.get("/doctors/" + id + "/patients-reservations");
+  }
 }
 
 export default new DoctorDataService();

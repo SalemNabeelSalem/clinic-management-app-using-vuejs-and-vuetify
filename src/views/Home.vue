@@ -32,7 +32,7 @@
                     additional content.
                   </b-card-text>
                   <b-button
-                    href="/doctor-dashboard/1/patients-checks"
+                    href="/doctor-dashboard/1/patients-reservations"
                     variant="light"
                     >Go</b-button
                   >
