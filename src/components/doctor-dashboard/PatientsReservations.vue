@@ -75,7 +75,7 @@ export default {
       DoctorDataService.findAllPatientsReservationsOfDoctor(this.doctorId)
         .then((response) => {
           this.patientsReservations = response.data;
-          console.log(this.patientsReservations);
+          // console.log(this.patientsReservations);
         })
         .catch((error) => {
           console.log(error);

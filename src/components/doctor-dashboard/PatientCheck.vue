@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div id="patient-check">
-      <div class="row">
+      <div class="row" v-if="!isPatientCheckExisting">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
@@ -110,16 +110,39 @@
           </div>
         </div>
       </div>
+
+      <div v-else>
+        <b-jumbotron>
+          <template #header>
+            {{ existingPatientCheck.checking }}
+          </template>
+
+          <template #lead>
+            {{ existingPatientCheck.prescription }}
+          </template>
+
+          <hr class="my-4" />
+
+          <p>
+            {{ existingPatientCheck.remarks }}
+          </p>
+        </b-jumbotron>
+      </div>
     </div>
   </v-app>
 </template>
 
 <script>
+// @ is an alias to /src
+import PatientCheckDataService from "@/libs/PatientCheckDataService";
+
 export default {
   name: "patient-check",
 
   data() {
     return {
+      isPatientCheckExisting: false,
+
       doctorId: "",
 
       reservationId: "",
@@ -133,12 +156,23 @@ export default {
         date: "",
         time: "",
       },
+
+      existingPatientCheck: {
+        doctorId: "",
+        reservationId: "",
+        checking: "",
+        prescription: "",
+        remarks: "",
+        date: "",
+        time: "",
+      },
     };
   },
 
   mounted() {
     this.getDoctorId();
     this.getReservationId();
+    this.getPatientCheck();
   },
 
   methods: {
@@ -169,6 +203,28 @@ export default {
       } else {
         console.log(this.newPatientCheck);
       }
+    },
+
+    getPatientCheck() {
+      PatientCheckDataService.findPatientCheckByReservationId(
+        this.reservationId
+      )
+        .then((response) => {
+          // console.log(response.data);
+
+          if (response.data.id != null) {
+            this.isPatientCheckExisting = true;
+
+            this.existingPatientCheck = response.data;
+
+            console.log(this.existingPatientCheck);
+          } else {
+            this.isPatientCheckExisting = false;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
