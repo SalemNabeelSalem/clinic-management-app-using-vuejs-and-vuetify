@@ -18,7 +18,8 @@ import Reports from "../components/manager-dashboard/Reports";
 import PatientsReservations from "../components/receptionist-dashboard/PatientsReservations";
 
 // Doctor-Dashboard Components Importing:-
-import PatientsChecks from "../components/doctor-dashboard/PatientsChecks";
+import PatientsReservationsOfDoctor from "../components/doctor-dashboard/PatientsReservations";
+import PatientCheck from "../components/doctor-dashboard/PatientCheck";
 
 import Login from "../components/Login";
 
@@ -80,9 +81,14 @@ const routes = [
     component: DoctorDashboard,
     children: [
       {
-        path: "/doctor-dashboard/:doctorId/patients-checks",
-        name: "PatientsChecks",
-        component: PatientsChecks,
+        path: "/doctor-dashboard/:doctorId/patients-reservations",
+        name: "PatientsReservationsOfDoctor",
+        component: PatientsReservationsOfDoctor,
+      },
+      {
+        path: "/doctor-dashboard/:doctorId/patients-reservations/:reservationId/check",
+        name: "PatientCheck",
+        component: PatientCheck,
       },
     ],
   },

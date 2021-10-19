@@ -62,6 +62,8 @@
           <router-view></router-view>
         </v-col>
       </v-container>
+
+      <Footer />
     </v-app>
   </div>
 </template>
@@ -69,8 +71,10 @@
 <script>
 // @ is an alias to /src
 import DoctorDataService from "@/libs/DoctorDataService.js";
+import Footer from "../components/global/Footer.vue";
 
 export default {
+  components: { Footer },
   name: "Doctor-Dashboard",
 
   data: () => ({
@@ -82,7 +86,7 @@ export default {
 
     items: [
       {
-        text: "Patients-Checks",
+        text: "Patients-Reservations",
         icon: "mdi-emoticon-sick-outline",
         link: "",
       },
@@ -104,14 +108,13 @@ export default {
       this.doctorId = this.$route.params.doctorId;
 
       this.items[0]["link"] =
-        "/doctor-dashboard/" + this.doctorId + "/patients-checks";
+        "/doctor-dashboard/" + this.doctorId + "/patients-reservations";
     },
 
     getCurrentDoctor() {
       DoctorDataService.findDoctorById(this.doctorId)
         .then((response) => {
           this.currentDoctor = response.data;
-          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);

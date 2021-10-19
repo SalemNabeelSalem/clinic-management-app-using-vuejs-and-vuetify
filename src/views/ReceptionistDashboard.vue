@@ -62,6 +62,8 @@
           <router-view></router-view>
         </v-col>
       </v-container>
+
+      <Footer />
     </v-app>
   </div>
 </template>
@@ -69,8 +71,10 @@
 <script>
 // @ is an alias to /src
 import ReceptionistDataService from "@/libs/ReceptionistDataService.js";
+import Footer from "../components/global/Footer.vue";
 
 export default {
+  components: { Footer },
   name: "Receptionist-Dashboard",
 
   data: () => ({

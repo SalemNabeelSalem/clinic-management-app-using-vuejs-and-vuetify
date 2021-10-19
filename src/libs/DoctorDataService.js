@@ -28,6 +28,14 @@ class DoctorDataService {
   deleteDoctor(id) {
     return http.delete("/doctors/" + id);
   }
+
+  findAllDoctorsList() {
+    return http.get("/doctors-list");
+  }
+
+  findAllPatientsReservationsOfDoctor(id) {
+    return http.get("/doctors/" + id + "/patients-reservations");
+  }
 }
 
 export default new DoctorDataService();
