@@ -66,27 +66,12 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="patient-check-date">Patient Date</label>
-                      <input
-                        type="date"
-                        class="form-control"
-                        id="patient-check-date"
-                        placeholder="Patient Date"
+                      <b-form-datepicker
+                        id="patient-check-dater"
                         v-model="newPatientCheck.date"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="patient-check-time">Patient Time</label>
-                      <input
-                        type="time"
-                        class="form-control"
-                        id="patient-check-time"
-                        placeholder="Patient Time"
-                        v-model="newPatientCheck.time"
-                      />
+                        class="mb-2 form-control"
+                      ></b-form-datepicker>
+                      <p>Value: '{{ newPatientCheck.date }}'</p>
                     </div>
                   </div>
                 </div>
@@ -114,11 +99,21 @@
       <div v-else>
         <b-jumbotron>
           <template #header>
-            {{ existingPatientCheck.checking }}
+            <span class="text-capitalize">
+              {{ existingPatientCheck.checking }}
+            </span>
           </template>
 
           <template #lead>
-            {{ existingPatientCheck.prescription }}
+            <span class="text-capitalize text-success">
+              {{ existingPatientCheck.prescription }}
+            </span>
+          </template>
+
+          <template>
+            <span class="text-capitalize text-primary">
+              {{ existingPatientCheck.date }}
+            </span>
           </template>
 
           <hr class="my-4" />
@@ -154,7 +149,6 @@ export default {
         prescription: "",
         remarks: "",
         date: "",
-        time: "",
       },
 
       existingPatientCheck: {
@@ -164,7 +158,6 @@ export default {
         prescription: "",
         remarks: "",
         date: "",
-        time: "",
       },
     };
   },
@@ -172,7 +165,7 @@ export default {
   mounted() {
     this.getDoctorId();
     this.getReservationId();
-    this.getPatientCheck();
+    this.findPatientCheckByReservationId();
   },
 
   methods: {
@@ -198,14 +191,13 @@ export default {
         alert("Please fill in the Patient Remarks");
       } else if (this.newPatientCheck.date == "") {
         alert("Please fill in the Patient Date");
-      } else if (this.newPatientCheck.time == "") {
-        alert("Please fill in the Patient Time");
       } else {
-        console.log(this.newPatientCheck);
+        this.createNewPatientCheck();
+        this.$router.go();
       }
     },
 
-    getPatientCheck() {
+    findPatientCheckByReservationId() {
       PatientCheckDataService.findPatientCheckByReservationId(
         this.reservationId
       )
@@ -217,10 +209,21 @@ export default {
 
             this.existingPatientCheck = response.data;
 
-            console.log(this.existingPatientCheck);
+            // console.log(this.existingPatientCheck);
           } else {
             this.isPatientCheckExisting = false;
           }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    createNewPatientCheck() {
+      PatientCheckDataService.createNewPatientCheck(this.newPatientCheck)
+        .then((response) => {
+          console.log(response.status);
+          this.newPatientCheck = {};
         })
         .catch((error) => {
           console.log(error);

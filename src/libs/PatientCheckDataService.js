@@ -6,6 +6,10 @@ class PatientCheckDataService {
       "/patients-reservations/" + reservationId + "/patients-checks"
     );
   }
+
+  createNewPatientCheck(newPatientCheck) {
+    return http.post("/patients-checks", newPatientCheck);
+  }
 }
 
 export default new PatientCheckDataService();
