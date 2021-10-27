@@ -49,7 +49,12 @@
                     With supporting laboratory dashboard as a natural lead-in to
                     additional content.
                   </b-card-text>
-                  <b-button href="#" variant="light">Go</b-button>
+                  <b-button
+                    href="/laboratory-dashboard/1/patients-dignostics"
+                    variant="light"
+                  >
+                    Go
+                  </b-button>
                 </b-card>
               </div>
 

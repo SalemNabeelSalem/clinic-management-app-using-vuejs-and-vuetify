@@ -1,11 +1,11 @@
 <template>
-  <div id="doctor-dashboard">
+  <div id="laboratory-dashboard">
     <v-app>
       <nav>
         <v-toolbar>
           <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-          <v-toolbar-title>Doctor Dashboard</v-toolbar-title>
+          <v-toolbar-title>Laboratory Dashboard</v-toolbar-title>
 
           <v-spacer></v-spacer>
 
@@ -26,10 +26,10 @@
           <v-list-item link>
             <v-list-item-content>
               <v-list-item-title class="text-h6 white--text">
-                {{ currentDoctor.fullName }}
+                {{ currentLaboratory.fullName }}
               </v-list-item-title>
               <v-list-item-subtitle class="yellow--text font-weight-medium">
-                {{ currentDoctor.email }}
+                {{ currentLaboratory.email }}
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -70,60 +70,55 @@
 
 <script>
 // @ is an alias to /src
-import DoctorDataService from "@/libs/DoctorDataService.js";
+import LaboratoryDataService from "@/libs/LaboratoryDataService.js";
 import Footer from "../components/global/Footer.vue";
 
 export default {
-  name: "Doctor-Dashboard",
+  name: "LaboratoryDashboard",
 
-  components: { Footer },
+  components: {
+    Footer,
+  },
 
   data: () => ({
     drawer: false,
 
     selectedItem: 1,
 
-    doctorId: null,
+    labId: null,
 
     items: [
       {
-        text: "Patients-Reservations",
-        icon: "mdi-emoticon-sick-outline",
-        link: "",
-      },
-      {
-        text: "Patients-Checks",
+        text: "Patients-Dignostic",
         icon: "mdi-heart-pulse",
         link: "",
       },
     ],
 
-    currentDoctor: {
+    currentLaboratory: {
       fullName: "",
       email: "",
     },
   }),
 
   mounted() {
-    this.getDoctorIdFromUrlParameters();
-    this.getCurrentDoctor();
+    this.getLaboratoryIdFromUrlParameters();
+    this.getCurrentLaboratory();
   },
 
   methods: {
-    getDoctorIdFromUrlParameters() {
-      this.doctorId = this.$route.params.doctorId;
+    getLaboratoryIdFromUrlParameters() {
+      this.labId = this.$route.params.labId;
 
       this.items[0]["link"] =
-        "/doctor-dashboard/" + this.doctorId + "/patients-reservations";
-
-      this.items[1]["link"] =
-        "/doctor-dashboard/" + this.doctorId + "/patients-checks";
+        "/laboratory-dashboard/" + this.labId + "/patients-dignostics";
     },
 
-    getCurrentDoctor() {
-      DoctorDataService.findDoctorById(this.doctorId)
+    getCurrentLaboratory() {
+      LaboratoryDataService.findLaboratoryById(this.labId)
         .then((response) => {
-          this.currentDoctor = response.data;
+          this.currentLaboratory = response.data;
+          console.log(this.currentLaboratory);
         })
         .catch((error) => {
           console.log(error);

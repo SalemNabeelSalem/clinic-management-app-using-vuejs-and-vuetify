@@ -1,8 +1,8 @@
 <template>
-  <div id="patients-checks">
+  <div id="patients-dignostic">
     <hr />
 
-    <h1 class="text-center">Patients Checks Page</h1>
+    <h1 class="text-center">Patients Dignostic Page</h1>
 
     <v-data-table
       :headers="headers"
@@ -30,7 +30,7 @@
           <v-spacer></v-spacer>
 
           <v-dialog v-model="dialog" max-width="500px">
-            <v-card v-if="formTitle === 'Edit Patient Check'">
+            <v-card v-if="formTitle === 'Edit Patient Dignostic'">
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
@@ -39,25 +39,9 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <v-text-field
-                        v-model="editedItem.checking"
-                        label="Checking"
-                        required
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12">
-                      <v-text-field
-                        v-model="editedItem.prescription"
-                        label="Prescription"
-                        required
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12">
                       <v-textarea
-                        v-model="editedItem.remarks"
-                        label="Remarks"
+                        v-model="editedItem.dignostic"
+                        label="Dignostic"
                         required
                       ></v-textarea>
                     </v-col>
@@ -107,10 +91,6 @@
         <v-icon small @click="editItem(item)" class="mx-1 green--text">
           mdi-pencil
         </v-icon>
-
-        <v-icon small @click="deleteItem(item)" class="red--text">
-          mdi-delete
-        </v-icon>
       </template>
 
       <template v-slot:no-data>
@@ -132,6 +112,7 @@
 // @ is an alias to /src
 import PatientsChecks from "@/libs/PatientCheckDataService.js";
 import ReceptionistDataService from "@/libs/ReceptionistDataService.js";
+import PatientCheckDataService from "@/libs/PatientCheckDataService.js";
 
 export default {
   name: "PatientsChecks",
@@ -162,29 +143,23 @@ export default {
     editedIndex: -1,
 
     customerEdit: {
-      checking: "",
-      prescription: "",
-      remarks: "",
+      dignostic: "",
     },
 
     editedItem: {
-      checking: "",
-      prescription: "",
-      remarks: "",
+      dignostic: "",
     },
 
     defaultItem: {
-      checking: "",
-      prescription: "",
-      remarks: "",
+      dignostic: "",
     },
   }),
 
   computed: {
     formTitle() {
       return this.editedIndex === -1
-        ? "New Patient Check"
-        : "Edit Patient Check";
+        ? "New Patient Dignostic"
+        : "Edit Patient Dignostic";
     },
   },
 
@@ -208,7 +183,7 @@ export default {
   methods: {
     // load records from database;
     loadRecords() {
-      PatientsChecks.findPatientsChecksByDoctorId(this.doctorId)
+      PatientsChecks.findAllPatientChecks()
         .then((response) => {
           this.desserts = response.data;
         })
@@ -287,22 +262,20 @@ export default {
         let updatedItem = this.desserts[this.editedIndex];
 
         // customer data modeling;
-        this.customerEdit.checking = this.editedItem.checking;
-        this.customerEdit.prescription = this.editedItem.prescription;
-        this.customerEdit.remarks = this.editedItem.remarks;
+        this.customerEdit.dignostic = this.editedItem.dignostic;
 
-        console.log("UPDATED PATIENT CHECK REQUEST: ");
+        console.log("UPDATED PATIENT DIGNOSTIC REQUEST: ");
 
         console.log(this.customerEdit);
 
-        ReceptionistDataService.updateReceptionist(
+        PatientCheckDataService.updatePatientCheckByLabId(
           updatedItem.id,
           this.customerEdit
         )
           .then((response) => {
             this.loadRecords();
 
-            console.log("UPDATED RECEPTIONIST RESPONSE: ");
+            console.log("UPDATED PATIENT DIGNOSTIC RESPONSE: ");
 
             console.log(response.data);
           })
@@ -311,14 +284,6 @@ export default {
           });
 
         Object.assign(this.desserts[this.editedIndex], this.editedItem);
-
-        console.log(
-          "EDITED EMPLOYEE NO: [" +
-            updatedItem.id +
-            "] WITH FULL-NAME: [" +
-            updatedItem.fullName +
-            "]."
-        );
       }
       this.close();
     },

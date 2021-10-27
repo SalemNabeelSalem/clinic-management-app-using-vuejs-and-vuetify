@@ -5,6 +5,10 @@ class LaboratoryDataService {
     return http.get("/laboratories");
   }
 
+  findLaboratoryById(id) {
+    return http.get("/laboratories/" + id);
+  }
+
   createNewLaboratory(data) {
     return http.post("/laboratories", data);
   }
