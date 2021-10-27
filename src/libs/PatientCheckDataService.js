@@ -7,6 +7,10 @@ class PatientCheckDataService {
     );
   }
 
+  findPatientsChecksByDoctorId(doctorId) {
+    return http.get("/doctors/" + doctorId + "/patients-checks");
+  }
+
   createNewPatientCheck(newPatientCheck) {
     return http.post("/patients-checks", newPatientCheck);
   }

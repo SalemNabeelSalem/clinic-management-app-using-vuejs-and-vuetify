@@ -20,6 +20,7 @@ import PatientsReservations from "../components/receptionist-dashboard/PatientsR
 // Doctor-Dashboard Components Importing:-
 import PatientsReservationsOfDoctor from "../components/doctor-dashboard/PatientsReservations";
 import PatientCheck from "../components/doctor-dashboard/PatientCheck";
+import PatientsChecks from "../components/doctor-dashboard/PatientsChecks";
 
 import Login from "../components/Login";
 
@@ -90,6 +91,11 @@ const routes = [
         name: "PatientCheck",
         component: PatientCheck,
       },
+      {
+        path: "/doctor-dashboard/:doctorId/patients-checks",
+        name: "PatientsChecks",
+        component: PatientsChecks,
+      },
     ],
   },
   {
@@ -103,6 +109,11 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  document.title = "B5-IT Final Project - Clinic App";
+  next();
 });
 
 export default router;

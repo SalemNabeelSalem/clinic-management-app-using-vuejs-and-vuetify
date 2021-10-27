@@ -90,6 +90,11 @@ export default {
         icon: "mdi-emoticon-sick-outline",
         link: "",
       },
+      {
+        text: "Patients-Checks",
+        icon: "mdi-heart-pulse",
+        link: "",
+      },
     ],
 
     currentDoctor: {
@@ -109,6 +114,9 @@ export default {
 
       this.items[0]["link"] =
         "/doctor-dashboard/" + this.doctorId + "/patients-reservations";
+
+      this.items[1]["link"] =
+        "/doctor-dashboard/" + this.doctorId + "/patients-checks";
     },
 
     getCurrentDoctor() {
