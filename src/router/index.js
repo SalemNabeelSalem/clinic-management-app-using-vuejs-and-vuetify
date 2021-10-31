@@ -26,7 +26,10 @@ import PatientsChecks from "../components/doctor-dashboard/PatientsChecks";
 // Laboratory-Dashboard Components Importing:-
 import PatientsDignostic from "../components/laboratory-dashboard/PatientsDignostic";
 
-import Login from "../components/Login";
+import RecepLogin from "../components/ReceptionistLogin";
+import LabLogin from "../components/LabLogin";
+import DoctorLogin from "../components/DoctorLogin";
+import ManagerLogin from "../components/ManagerLogin";
 
 Vue.use(VueRouter);
 
@@ -115,9 +118,24 @@ const routes = [
     ],
   },
   {
-    path: "/login",
-    name: "Login",
-    component: Login,
+    path: "/recep-login",
+    name: "RecepLogin",
+    component: RecepLogin,
+  },
+  {
+    path: "/lab-login",
+    name: "LabLogin",
+    component: LabLogin,
+  },
+  {
+    path: "/doctor-login",
+    name: "DoctorLogin",
+    component: DoctorLogin,
+  },
+  {
+    path: "/manager-login",
+    name: "ManagerLogin",
+    component: ManagerLogin,
   },
 ];
 

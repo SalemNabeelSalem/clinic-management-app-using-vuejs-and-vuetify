@@ -15,7 +15,7 @@
                     With supporting manager dashboard as a natural lead-in to
                     additional content.
                   </b-card-text>
-                  <b-button href="/manager-dashboard" variant="light">
+                  <b-button href="/manager-login" variant="light">
                     Go
                   </b-button>
                 </b-card>
@@ -31,11 +31,8 @@
                     With supporting doctor dashboard as a natural lead-in to
                     additional content.
                   </b-card-text>
-                  <b-button
-                    href="/doctor-dashboard/1/patients-reservations"
-                    variant="light"
-                    >Go</b-button
-                  >
+                  <!-- href="/doctor-dashboard/1/patients-reservations" -->
+                  <b-button href="/doctor-login" variant="light">Go</b-button>
                 </b-card>
               </div>
 
@@ -49,12 +46,8 @@
                     With supporting laboratory dashboard as a natural lead-in to
                     additional content.
                   </b-card-text>
-                  <b-button
-                    href="/laboratory-dashboard/1/patients-dignostics"
-                    variant="light"
-                  >
-                    Go
-                  </b-button>
+                  <!-- href="/laboratory-dashboard/1/patients-dignostics" -->
+                  <b-button href="/lab-login" variant="light"> Go </b-button>
                 </b-card>
               </div>
 
@@ -68,12 +61,8 @@
                     With supporting receptionist dashboard as a natural lead-in
                     to additional content.
                   </b-card-text>
-                  <b-button
-                    href="/recep-dashboard/1/patients-reservations"
-                    variant="light"
-                  >
-                    Go
-                  </b-button>
+                  <!-- href="/recep-dashboard/1/patients-reservations" -->
+                  <b-button href="/recep-login" variant="light"> Go </b-button>
                 </b-card>
               </div>
             </div>
